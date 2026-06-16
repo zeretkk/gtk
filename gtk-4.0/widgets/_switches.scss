@@ -9,12 +9,13 @@
   min-width: 45px;
   min-height: 27px;
   background-size: 45px 27px;
-  background-color: transparent;
+  background-color: $_switch_bg;
   background-repeat: no-repeat;
   background-position: center center;
   background-image: -gtk-scaled(url("../assets/switch-off.svg"),url("../assets/switch-off.svg"));
 
   &:disabled {
+    background-color: $insensitive_bg_color;
     background-image: -gtk-scaled(url("../assets/switch-insensitive.svg"),url("../assets/switch-insensitive.svg"));
   }
 
@@ -26,6 +27,7 @@
   }
   
   &:checked {
+    background-color: $selected_bg_color;
     background-image: -gtk-scaled(url("../assets/switch-on.svg"),url("../assets/switch-on.svg"));
     slider {
       background-image: -gtk-scaled(url("../assets/switch-slider-on.svg"),url("../assets/switch-slider-on@2.png"));
@@ -34,11 +36,13 @@
 
   // Handle
   slider {
-    min-width: 1px;
-    min-height: 1px;
+    min-width: 23px;
+    min-height: 23px;
+    margin: 2px;
+    border-radius: 999px;
     background-repeat: no-repeat;
-    background-position: left center;
-    background-color: transparent;
+    background-position: center;
+    background-color: $fg_color;
     background-image: -gtk-scaled(url("../assets/switch-slider-off.svg"),url("../assets/switch-slider-off@2.png"));
   }
 }

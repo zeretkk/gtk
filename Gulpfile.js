@@ -1,36 +1,50 @@
 var gulp = require('gulp');
-var sass = require('gulp-sass');
-var exec = require('gulp-exec');
+var childProcess = require('child_process');
+
+function compileSass(sources) {
+    sources.forEach(function(source) {
+        var target = source.replace(/\.scss$/, '.css');
+        childProcess.execFileSync('sassc', [source, target], { stdio: 'inherit' });
+    });
+}
 
 gulp.task('styles', function(done) {
-    gulp.src('gtk-3.20/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./gtk-3.20/'))
-        .pipe(exec(' gsettings set org.gnome.desktop.interface gtk-theme "Dracula"'))
+    compileSass([
+        'gtk-3.20/gtk.scss',
+        'gtk-3.20/gtk-dark.scss'
+    ]);
     done();
 });
+
+gulp.task('styles-gtk4', function(done) {
+    compileSass([
+        'gtk-4.0/gtk.scss',
+        'gtk-4.0/gtk-dark.scss'
+    ]);
+    done();
+});
+
+gulp.task('gtk', gulp.series('styles', 'styles-gtk4'));
+
 gulp.task('shell-style', function(done) {
-    gulp.src('gnome-shell/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./gnome-shell/'))
-        .pipe(exec('gsettings set org.gnome.shell.extensions.user-theme name "Ant"'))
-        .pipe(exec('gsettings set org.gnome.shell.extensions.user-theme name "Dracula"'))
+    compileSass([
+        'gnome-shell/gnome-shell.scss',
+        'gnome-shell/legacy/gnome-shell.scss'
+    ]);
     done();
 });
 
 gulp.task('cinnamon-style', function(done) {
-    gulp.src('cinnamon/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./cinnamon/'))
-        .pipe(exec(' gsettings set org.cinnamon.desktop.interface gtk-theme "Dracula"'))
-        .pipe(exec(' gsettings set org.cinnamon.desktop.wm.preferences theme "Dracula"'))
-        .pipe(exec(' gsettings set org.cinnamon.theme name "Dracula"'))
+    compileSass([
+        'cinnamon/cinnamon.scss',
+        'cinnamon/cinnamon-dark.scss'
+    ]);
     done();
 });
 
 //Watch task
 gulp.task('default',function() {
-    gulp.watch('gtk-3.20/**/*.scss', gulp.series('styles'));
+    gulp.watch(['gtk-3.20/**/*.scss', 'gtk-4.0/**/*.scss'], gulp.series('gtk'));
 });
 
 gulp.task('shell',function() {

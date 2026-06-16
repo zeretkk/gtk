@@ -91,7 +91,7 @@ windowcontrols {
        background-color: transparent;
        border: none;
        box-shadow: none;
-        color: transparent;
+        color: if($variant == 'light', $headerbar_fg_color, $fg_color);
       }
   
     }

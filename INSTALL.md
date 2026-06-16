@@ -27,6 +27,19 @@ or Change via distribution specific tweak-tool.
 
 2.- Using [this script](https://github.com/odziom91/libadwaita-theme-changer) which will copy the needed folders to the right directories
 
+3.- Link the files from this repository, keeping local changes live:
+
+```
+./libadwaita-linker.sh link
+```
+
+To inspect or remove these links:
+
+```
+./libadwaita-linker.sh status
+./libadwaita-linker.sh unlink
+```
+
 ## Icon Theme (optional)
 
 #### Install manually
