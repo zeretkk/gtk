@@ -114,21 +114,15 @@ headerbar {
 
     //Reset style
     &.titlebutton {
-      color: $headerbar_fg_color;
+      color: transparent;
       box-shadow: none;
 
-      *,
       &:hover,
       &:active,
-      &:checked {
-        color: $headerbar_fg_color;
-        box-shadow: none;
-      }
-
+      &:checked,
       &:backdrop,
-      &:backdrop:hover,
-      &:backdrop * {
-        color: $backdrop_fg_color;
+      &:backdrop:hover,* {
+        color: transparent;
         box-shadow: none;
       }
     }
